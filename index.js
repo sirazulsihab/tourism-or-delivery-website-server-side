@@ -6,7 +6,7 @@ const app = express();
 const port = 5000;
 
 app.use(cors());
-
+app.use(express.json())
 // user : 
 // pass :FugxSnzA1NQWMmY4
 
@@ -28,8 +28,19 @@ async function run() {
         res.json(result)
     })
     // POST API
-    app.post('/service', async (req, res) => {
+    app.post('/services', async (req, res) => {
+        const newUser = req.body;
+        const result = await serviceCollection.insertOne(newUser)
         
+        res.json(result);
+    })
+    app.post('/services/byKeys', async (req, res) => {
+        const keys = req.body;
+        const query = {key : {$in : keys}}
+
+        const service = await serviceCollection.find(query).toArray();
+        console.log(service);
+        res.json(service);
     })
     } finally {
     //   await client.close();
