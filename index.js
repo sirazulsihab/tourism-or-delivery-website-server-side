@@ -19,12 +19,13 @@ async function run() {
         await client.connect();
         const database = client.db("travelDB");
         const serviceCollection = database.collection("services");
+        const orderCollection = database.collection("orders");
+
     // GET API
     app.get('/services', async (req, res) => {
         const query = {}
         const cursor = serviceCollection.find(query);
         const result = await cursor.toArray();
-        console.log(result);
         res.json(result)
     })
     // POST API
@@ -37,10 +38,14 @@ async function run() {
     app.post('/services/byKeys', async (req, res) => {
         const keys = req.body;
         const query = {key : {$in : keys}}
-
         const service = await serviceCollection.find(query).toArray();
-        console.log(service);
         res.json(service);
+    });
+    // Order api
+    app.post('/orders', async (req, res) => {
+        const order = req.body;
+        const result = await orderCollection.insertOne(order);
+        res.json(result)
     })
     } finally {
     //   await client.close();
