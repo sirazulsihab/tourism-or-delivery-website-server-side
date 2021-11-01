@@ -13,7 +13,6 @@ app.use(express.json())
 const uri = "mongodb+srv://sihab:FugxSnzA1NQWMmY4@cluster0.otdtg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
 async function run() {
     try {
         await client.connect();
