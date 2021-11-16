@@ -13,12 +13,9 @@ app.use(express.json());
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.otdtg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-console.log(uri);
-
 async function run() {
   try {
     await client.connect();
-    console.log('db connect')
     const database = client.db("travelDB");
     const serviceCollection = database.collection("places");
     const myOrderCollection = database.collection("myBooking");
